@@ -12,10 +12,10 @@ def p_vars(p):
          | 
     '''
 
-def p_listaVars(p):
+def p_lista_vars(p):
     '''
     ListaVars : ID COMMA ListaVars
-              | ID COLON TYPE SEMICOLON
+              | ID
     '''
 
 def p_type(p):
@@ -36,7 +36,7 @@ def p_funcion(p):
     Funcion : TipoFunc ID LPARENTH Parametros RPARENTH COLON Body
     '''
 
-def p_tipoFunc(p):
+def p_tipofunc(p):
     '''
     TipoFunc : VOID
              | TYPE

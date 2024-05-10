@@ -7,7 +7,7 @@ Rule 1     Programa -> PROGRAM ID SEMICOLON VARS FUNCS MAIN Body END SEMICOLON
 Rule 2     VARS -> VAR ListaVars COLON TYPE SEMICOLON
 Rule 3     VARS -> <empty>
 Rule 4     ListaVars -> ID COMMA ListaVars
-Rule 5     ListaVars -> ID COLON TYPE SEMICOLON
+Rule 5     ListaVars -> ID
 Rule 6     TYPE -> INT
 Rule 7     TYPE -> FLOAT
 Rule 8     TYPE -> STRING
@@ -59,7 +59,7 @@ Rule 53    CTE -> CTE_STRING
 
 Terminals, with rules where they appear
 
-COLON                : 2 5 11 15
+COLON                : 2 11 15
 COMMA                : 4 14 31
 CTE_FLOAT            : 52
 CTE_INT              : 51
@@ -86,7 +86,7 @@ PRINT                : 34
 PROGRAM              : 1
 RBRACE               : 17
 RPARENTH             : 11 26 27 28 29 30 34 45
-SEMICOLON            : 1 1 2 5 25 28 29 30 34
+SEMICOLON            : 1 1 2 25 28 29 30 34
 STRING               : 8
 VAR                  : 2
 VOID                 : 12
@@ -114,7 +114,7 @@ Programa             : 0
 Statement            : 18
 Statements           : 17 18
 Subf                 : 46 47 48
-TYPE                 : 2 5 13 15
+TYPE                 : 2 13 15
 Termino              : 39 40 41 42 43
 TipoFunc             : 11
 VARS                 : 1
@@ -192,7 +192,7 @@ state 6
 
     (2) VARS -> VAR . ListaVars COLON TYPE SEMICOLON
     (4) ListaVars -> . ID COMMA ListaVars
-    (5) ListaVars -> . ID COLON TYPE SEMICOLON
+    (5) ListaVars -> . ID
 
     ID              shift and go to state 16
 
@@ -286,10 +286,10 @@ state 15
 state 16
 
     (4) ListaVars -> ID . COMMA ListaVars
-    (5) ListaVars -> ID . COLON TYPE SEMICOLON
+    (5) ListaVars -> ID .
 
     COMMA           shift and go to state 21
-    COLON           shift and go to state 22
+    COLON           reduce using rule 5 (ListaVars -> ID .)
 
 
 state 17
@@ -297,9 +297,9 @@ state 17
     (1) Programa -> PROGRAM ID SEMICOLON VARS FUNCS MAIN . Body END SEMICOLON
     (17) Body -> . LBRACE Statements RBRACE
 
-    LBRACE          shift and go to state 24
+    LBRACE          shift and go to state 23
 
-    Body                           shift and go to state 23
+    Body                           shift and go to state 22
 
 state 18
 
@@ -312,7 +312,7 @@ state 19
 
     (11) Funcion -> TipoFunc ID . LPARENTH Parametros RPARENTH COLON Body
 
-    LPARENTH        shift and go to state 25
+    LPARENTH        shift and go to state 24
 
 
 state 20
@@ -326,39 +326,26 @@ state 20
     FLOAT           shift and go to state 13
     STRING          shift and go to state 14
 
-    TYPE                           shift and go to state 26
+    TYPE                           shift and go to state 25
 
 state 21
 
     (4) ListaVars -> ID COMMA . ListaVars
     (4) ListaVars -> . ID COMMA ListaVars
-    (5) ListaVars -> . ID COLON TYPE SEMICOLON
+    (5) ListaVars -> . ID
 
     ID              shift and go to state 16
 
-    ListaVars                      shift and go to state 27
+    ListaVars                      shift and go to state 26
 
 state 22
 
-    (5) ListaVars -> ID COLON . TYPE SEMICOLON
-    (6) TYPE -> . INT
-    (7) TYPE -> . FLOAT
-    (8) TYPE -> . STRING
-
-    INT             shift and go to state 12
-    FLOAT           shift and go to state 13
-    STRING          shift and go to state 14
-
-    TYPE                           shift and go to state 28
-
-state 23
-
     (1) Programa -> PROGRAM ID SEMICOLON VARS FUNCS MAIN Body . END SEMICOLON
 
-    END             shift and go to state 29
+    END             shift and go to state 27
 
 
-state 24
+state 23
 
     (17) Body -> LBRACE . Statements RBRACE
     (18) Statements -> . Statement Statements
@@ -377,68 +364,61 @@ state 24
     (34) Print -> . PRINT LPARENTH Expresiones RPARENTH SEMICOLON
 
     RBRACE          reduce using rule 19 (Statements -> .)
-    ID              shift and go to state 37
-    IF              shift and go to state 38
-    WHILE           shift and go to state 39
-    DO              shift and go to state 40
-    PRINT           shift and go to state 41
+    ID              shift and go to state 35
+    IF              shift and go to state 36
+    WHILE           shift and go to state 37
+    DO              shift and go to state 38
+    PRINT           shift and go to state 39
 
-    Statements                     shift and go to state 30
-    Statement                      shift and go to state 31
-    ASSIGN                         shift and go to state 32
-    CONDITION                      shift and go to state 33
-    CYCLE                          shift and go to state 34
-    F_Call                         shift and go to state 35
-    Print                          shift and go to state 36
+    Statements                     shift and go to state 28
+    Statement                      shift and go to state 29
+    ASSIGN                         shift and go to state 30
+    CONDITION                      shift and go to state 31
+    CYCLE                          shift and go to state 32
+    F_Call                         shift and go to state 33
+    Print                          shift and go to state 34
 
-state 25
+state 24
 
     (11) Funcion -> TipoFunc ID LPARENTH . Parametros RPARENTH COLON Body
     (14) Parametros -> . ID COMMA Parametros
     (15) Parametros -> . ID COLON TYPE
     (16) Parametros -> .
 
-    ID              shift and go to state 42
+    ID              shift and go to state 40
     RPARENTH        reduce using rule 16 (Parametros -> .)
 
-    Parametros                     shift and go to state 43
+    Parametros                     shift and go to state 41
 
-state 26
+state 25
 
     (2) VARS -> VAR ListaVars COLON TYPE . SEMICOLON
 
-    SEMICOLON       shift and go to state 44
+    SEMICOLON       shift and go to state 42
 
 
-state 27
+state 26
 
     (4) ListaVars -> ID COMMA ListaVars .
 
     COLON           reduce using rule 4 (ListaVars -> ID COMMA ListaVars .)
 
 
-state 28
-
-    (5) ListaVars -> ID COLON TYPE . SEMICOLON
-
-    SEMICOLON       shift and go to state 45
-
-
-state 29
+state 27
 
     (1) Programa -> PROGRAM ID SEMICOLON VARS FUNCS MAIN Body END . SEMICOLON
 
-    SEMICOLON       shift and go to state 46
+    SEMICOLON       shift and go to state 43
 
 
-state 30
+state 28
 
     (17) Body -> LBRACE Statements . RBRACE
 
-    RBRACE          shift and go to state 47
+    RBRACE          shift and go to state 44
 
 
-state 31
+state 29
 
     (18) Statements -> Statement . Statements
     (18) Statements -> . Statement Statements
@@ -457,21 +437,21 @@ state 31
     (34) Print -> . PRINT LPARENTH Expresiones RPARENTH SEMICOLON
 
     RBRACE          reduce using rule 19 (Statements -> .)
-    ID              shift and go to state 37
-    IF              shift and go to state 38
-    WHILE           shift and go to state 39
-    DO              shift and go to state 40
-    PRINT           shift and go to state 41
+    ID              shift and go to state 35
+    IF              shift and go to state 36
+    WHILE           shift and go to state 37
+    DO              shift and go to state 38
+    PRINT           shift and go to state 39
 
-    Statement                      shift and go to state 31
-    Statements                     shift and go to state 48
-    ASSIGN                         shift and go to state 32
-    CONDITION                      shift and go to state 33
-    CYCLE                          shift and go to state 34
-    F_Call                         shift and go to state 35
-    Print                          shift and go to state 36
+    Statement                      shift and go to state 29
+    Statements                     shift and go to state 45
+    ASSIGN                         shift and go to state 30
+    CONDITION                      shift and go to state 31
+    CYCLE                          shift and go to state 32
+    F_Call                         shift and go to state 33
+    Print                          shift and go to state 34
 
-state 32
+state 30
 
     (20) Statement -> ASSIGN .
 
@@ -483,7 +463,7 @@ state 32
     RBRACE          reduce using rule 20 (Statement -> ASSIGN .)
 
 
-state 33
+state 31
 
     (21) Statement -> CONDITION .
 
@@ -495,7 +475,7 @@ state 33
     RBRACE          reduce using rule 21 (Statement -> CONDITION .)
 
 
-state 34
+state 32
 
     (22) Statement -> CYCLE .
 
@@ -507,7 +487,7 @@ state 34
     RBRACE          reduce using rule 22 (Statement -> CYCLE .)
 
 
-state 35
+state 33
 
     (23) Statement -> F_Call .
 
@@ -519,7 +499,7 @@ state 35
     RBRACE          reduce using rule 23 (Statement -> F_Call .)
 
 
-state 36
+state 34
 
     (24) Statement -> Print .
 
@@ -531,63 +511,63 @@ state 36
     RBRACE          reduce using rule 24 (Statement -> Print .)
 
 
-state 37
+state 35
 
     (25) ASSIGN -> ID . EQUAL Expresion SEMICOLON
     (30) F_Call -> ID . LPARENTH Expresiones RPARENTH SEMICOLON
 
-    EQUAL           shift and go to state 49
-    LPARENTH        shift and go to state 50
+    EQUAL           shift and go to state 46
+    LPARENTH        shift and go to state 47
 
 
-state 38
+state 36
 
     (26) CONDITION -> IF . LPARENTH Expresion RPARENTH Body
     (27) CONDITION -> IF . LPARENTH Expresion RPARENTH Body ELSE Body
 
-    LPARENTH        shift and go to state 51
+    LPARENTH        shift and go to state 48
 
 
-state 39
+state 37
 
     (28) CYCLE -> WHILE . LPARENTH Expresion RPARENTH Body SEMICOLON
 
-    LPARENTH        shift and go to state 52
+    LPARENTH        shift and go to state 49
 
 
-state 40
+state 38
 
     (29) CYCLE -> DO . Body WHILE LPARENTH Expresion RPARENTH SEMICOLON
     (17) Body -> . LBRACE Statements RBRACE
 
-    LBRACE          shift and go to state 24
+    LBRACE          shift and go to state 23
 
-    Body                           shift and go to state 53
+    Body                           shift and go to state 50
 
-state 41
+state 39
 
     (34) Print -> PRINT . LPARENTH Expresiones RPARENTH SEMICOLON
 
-    LPARENTH        shift and go to state 54
+    LPARENTH        shift and go to state 51
 
 
-state 42
+state 40
 
     (14) Parametros -> ID . COMMA Parametros
     (15) Parametros -> ID . COLON TYPE
 
-    COMMA           shift and go to state 55
-    COLON           shift and go to state 56
+    COMMA           shift and go to state 52
+    COLON           shift and go to state 53
 
 
-state 43
+state 41
 
     (11) Funcion -> TipoFunc ID LPARENTH Parametros . RPARENTH COLON Body
 
-    RPARENTH        shift and go to state 57
+    RPARENTH        shift and go to state 54
 
 
-state 44
+state 42
 
     (2) VARS -> VAR ListaVars COLON TYPE SEMICOLON .
 
@@ -598,21 +578,14 @@ state 44
     MAIN            reduce using rule 2 (VARS -> VAR ListaVars COLON TYPE SEMICOLON .)
 
 
-state 45
-
-    (5) ListaVars -> ID COLON TYPE SEMICOLON .
-
-    COLON           reduce using rule 5 (ListaVars -> ID COLON TYPE SEMICOLON .)
-
-
-state 46
+state 43
 
     (1) Programa -> PROGRAM ID SEMICOLON VARS FUNCS MAIN Body END SEMICOLON .
 
     $end            reduce using rule 1 (Programa -> PROGRAM ID SEMICOLON VARS FUNCS MAIN Body END SEMICOLON .)
 
 
-state 47
+state 44
 
     (17) Body -> LBRACE Statements RBRACE .
 
@@ -632,14 +605,14 @@ state 47
     SEMICOLON       reduce using rule 17 (Body -> LBRACE Statements RBRACE .)
 
 
-state 48
+state 45
 
     (18) Statements -> Statement Statements .
 
     RBRACE          reduce using rule 18 (Statements -> Statement Statements .)
 
 
-state 49
+state 46
 
     (25) ASSIGN -> ID EQUAL . Expresion SEMICOLON
     (35) Expresion -> . Expresion NOTEQUAL Exp
@@ -662,22 +635,22 @@ state 49
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Expresion                      shift and go to state 59
-    Exp                            shift and go to state 60
-    Termino                        shift and go to state 62
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Expresion                      shift and go to state 56
+    Exp                            shift and go to state 57
+    Termino                        shift and go to state 59
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 50
+state 47
 
     (30) F_Call -> ID LPARENTH . Expresiones RPARENTH SEMICOLON
     (31) Expresiones -> . Expresion COMMA Expresiones
@@ -704,23 +677,23 @@ state 50
     (53) CTE -> . CTE_STRING
 
     RPARENTH        reduce using rule 33 (Expresiones -> .)
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Expresiones                    shift and go to state 71
-    Expresion                      shift and go to state 72
-    Exp                            shift and go to state 60
-    Termino                        shift and go to state 62
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Expresiones                    shift and go to state 68
+    Expresion                      shift and go to state 69
+    Exp                            shift and go to state 57
+    Termino                        shift and go to state 59
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 51
+state 48
 
     (26) CONDITION -> IF LPARENTH . Expresion RPARENTH Body
     (27) CONDITION -> IF LPARENTH . Expresion RPARENTH Body ELSE Body
@@ -744,22 +717,22 @@ state 51
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Expresion                      shift and go to state 73
-    Exp                            shift and go to state 60
-    Termino                        shift and go to state 62
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Expresion                      shift and go to state 70
+    Exp                            shift and go to state 57
+    Termino                        shift and go to state 59
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 52
+state 49
 
     (28) CYCLE -> WHILE LPARENTH . Expresion RPARENTH Body SEMICOLON
     (35) Expresion -> . Expresion NOTEQUAL Exp
@@ -782,29 +755,29 @@ state 52
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Expresion                      shift and go to state 74
-    Exp                            shift and go to state 60
-    Termino                        shift and go to state 62
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Expresion                      shift and go to state 71
+    Exp                            shift and go to state 57
+    Termino                        shift and go to state 59
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 53
+state 50
 
     (29) CYCLE -> DO Body . WHILE LPARENTH Expresion RPARENTH SEMICOLON
 
-    WHILE           shift and go to state 75
+    WHILE           shift and go to state 72
 
 
-state 54
+state 51
 
     (34) Print -> PRINT LPARENTH . Expresiones RPARENTH SEMICOLON
     (31) Expresiones -> . Expresion COMMA Expresiones
@@ -831,35 +804,35 @@ state 54
     (53) CTE -> . CTE_STRING
 
     RPARENTH        reduce using rule 33 (Expresiones -> .)
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Expresiones                    shift and go to state 76
-    Expresion                      shift and go to state 72
-    Exp                            shift and go to state 60
-    Termino                        shift and go to state 62
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Expresiones                    shift and go to state 73
+    Expresion                      shift and go to state 69
+    Exp                            shift and go to state 57
+    Termino                        shift and go to state 59
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 55
+state 52
 
     (14) Parametros -> ID COMMA . Parametros
     (14) Parametros -> . ID COMMA Parametros
     (15) Parametros -> . ID COLON TYPE
     (16) Parametros -> .
 
-    ID              shift and go to state 42
+    ID              shift and go to state 40
     RPARENTH        reduce using rule 16 (Parametros -> .)
 
-    Parametros                     shift and go to state 77
+    Parametros                     shift and go to state 74
 
-state 56
+state 53
 
     (15) Parametros -> ID COLON . TYPE
     (6) TYPE -> . INT
@@ -870,16 +843,16 @@ state 56
     FLOAT           shift and go to state 13
     STRING          shift and go to state 14
 
-    TYPE                           shift and go to state 78
+    TYPE                           shift and go to state 75
 
-state 57
+state 54
 
     (11) Funcion -> TipoFunc ID LPARENTH Parametros RPARENTH . COLON Body
 
-    COLON           shift and go to state 79
+    COLON           shift and go to state 76
 
 
-state 58
+state 55
 
     (50) Subf -> ID .
 
@@ -895,20 +868,20 @@ state 58
     RPARENTH        reduce using rule 50 (Subf -> ID .)
 
 
-state 59
+state 56
 
     (25) ASSIGN -> ID EQUAL Expresion . SEMICOLON
     (35) Expresion -> Expresion . NOTEQUAL Exp
     (36) Expresion -> Expresion . LESSTHAN Exp
     (37) Expresion -> Expresion . GREATERTHAN Exp
 
-    SEMICOLON       shift and go to state 80
-    NOTEQUAL        shift and go to state 81
-    LESSTHAN        shift and go to state 82
-    GREATERTHAN     shift and go to state 83
+    SEMICOLON       shift and go to state 77
+    NOTEQUAL        shift and go to state 78
+    LESSTHAN        shift and go to state 79
+    GREATERTHAN     shift and go to state 80
 
 
-state 60
+state 57
 
     (38) Expresion -> Exp .
     (39) Exp -> Exp . PLUS Termino
@@ -920,11 +893,11 @@ state 60
     GREATERTHAN     reduce using rule 38 (Expresion -> Exp .)
     COMMA           reduce using rule 38 (Expresion -> Exp .)
     RPARENTH        reduce using rule 38 (Expresion -> Exp .)
-    PLUS            shift and go to state 84
-    MINUS           shift and go to state 85
+    PLUS            shift and go to state 81
+    MINUS           shift and go to state 82
 
 
-state 61
+state 58
 
     (46) Factor -> PLUS . Subf
     (49) Subf -> . CTE
@@ -933,15 +906,15 @@ state 61
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Subf                           shift and go to state 86
-    CTE                            shift and go to state 67
+    Subf                           shift and go to state 83
+    CTE                            shift and go to state 64
 
-state 62
+state 59
 
     (41) Exp -> Termino .
     (42) Termino -> Termino . MULTIPLY Factor
@@ -955,11 +928,11 @@ state 62
     GREATERTHAN     reduce using rule 41 (Exp -> Termino .)
     COMMA           reduce using rule 41 (Exp -> Termino .)
     RPARENTH        reduce using rule 41 (Exp -> Termino .)
-    MULTIPLY        shift and go to state 87
-    DIVIDE          shift and go to state 88
+    MULTIPLY        shift and go to state 84
+    DIVIDE          shift and go to state 85
 
 
-state 63
+state 60
 
     (47) Factor -> MINUS . Subf
     (49) Subf -> . CTE
@@ -968,15 +941,15 @@ state 63
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Subf                           shift and go to state 89
-    CTE                            shift and go to state 67
+    Subf                           shift and go to state 86
+    CTE                            shift and go to state 64
 
-state 64
+state 61
 
     (44) Termino -> Factor .
 
@@ -992,7 +965,7 @@ state 64
     RPARENTH        reduce using rule 44 (Termino -> Factor .)
 
 
-state 65
+state 62
 
     (45) Factor -> LPARENTH . Expresion RPARENTH
     (35) Expresion -> . Expresion NOTEQUAL Exp
@@ -1015,22 +988,22 @@ state 65
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Expresion                      shift and go to state 90
-    Exp                            shift and go to state 60
-    Termino                        shift and go to state 62
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Expresion                      shift and go to state 87
+    Exp                            shift and go to state 57
+    Termino                        shift and go to state 59
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 66
+state 63
 
     (48) Factor -> Subf .
 
@@ -1046,7 +1019,7 @@ state 66
     RPARENTH        reduce using rule 48 (Factor -> Subf .)
 
 
-state 67
+state 64
 
     (49) Subf -> CTE .
 
@@ -1062,7 +1035,7 @@ state 67
     RPARENTH        reduce using rule 49 (Subf -> CTE .)
 
 
-state 68
+state 65
 
     (51) CTE -> CTE_INT .
 
@@ -1078,7 +1051,7 @@ state 68
     RPARENTH        reduce using rule 51 (CTE -> CTE_INT .)
 
 
-state 69
+state 66
 
     (52) CTE -> CTE_FLOAT .
 
@@ -1094,7 +1067,7 @@ state 69
     RPARENTH        reduce using rule 52 (CTE -> CTE_FLOAT .)
 
 
-state 70
+state 67
 
     (53) CTE -> CTE_STRING .
 
@@ -1110,14 +1083,14 @@ state 70
     RPARENTH        reduce using rule 53 (CTE -> CTE_STRING .)
 
 
-state 71
+state 68
 
     (30) F_Call -> ID LPARENTH Expresiones . RPARENTH SEMICOLON
 
-    RPARENTH        shift and go to state 91
+    RPARENTH        shift and go to state 88
 
 
-state 72
+state 69
 
     (31) Expresiones -> Expresion . COMMA Expresiones
     (32) Expresiones -> Expresion .
@@ -1125,14 +1098,14 @@ state 72
     (36) Expresion -> Expresion . LESSTHAN Exp
     (37) Expresion -> Expresion . GREATERTHAN Exp
 
-    COMMA           shift and go to state 92
+    COMMA           shift and go to state 89
     RPARENTH        reduce using rule 32 (Expresiones -> Expresion .)
-    NOTEQUAL        shift and go to state 81
-    LESSTHAN        shift and go to state 82
-    GREATERTHAN     shift and go to state 83
+    NOTEQUAL        shift and go to state 78
+    LESSTHAN        shift and go to state 79
+    GREATERTHAN     shift and go to state 80
 
 
-state 73
+state 70
 
     (26) CONDITION -> IF LPARENTH Expresion . RPARENTH Body
     (27) CONDITION -> IF LPARENTH Expresion . RPARENTH Body ELSE Body
@@ -1140,63 +1113,63 @@ state 73
     (36) Expresion -> Expresion . LESSTHAN Exp
     (37) Expresion -> Expresion . GREATERTHAN Exp
 
-    RPARENTH        shift and go to state 93
-    NOTEQUAL        shift and go to state 81
-    LESSTHAN        shift and go to state 82
-    GREATERTHAN     shift and go to state 83
+    RPARENTH        shift and go to state 90
+    NOTEQUAL        shift and go to state 78
+    LESSTHAN        shift and go to state 79
+    GREATERTHAN     shift and go to state 80
 
 
-state 74
+state 71
 
     (28) CYCLE -> WHILE LPARENTH Expresion . RPARENTH Body SEMICOLON
     (35) Expresion -> Expresion . NOTEQUAL Exp
     (36) Expresion -> Expresion . LESSTHAN Exp
     (37) Expresion -> Expresion . GREATERTHAN Exp
 
-    RPARENTH        shift and go to state 94
-    NOTEQUAL        shift and go to state 81
-    LESSTHAN        shift and go to state 82
-    GREATERTHAN     shift and go to state 83
+    RPARENTH        shift and go to state 91
+    NOTEQUAL        shift and go to state 78
+    LESSTHAN        shift and go to state 79
+    GREATERTHAN     shift and go to state 80
 
 
-state 75
+state 72
 
     (29) CYCLE -> DO Body WHILE . LPARENTH Expresion RPARENTH SEMICOLON
 
-    LPARENTH        shift and go to state 95
+    LPARENTH        shift and go to state 92
 
 
-state 76
+state 73
 
     (34) Print -> PRINT LPARENTH Expresiones . RPARENTH SEMICOLON
 
-    RPARENTH        shift and go to state 96
+    RPARENTH        shift and go to state 93
 
 
-state 77
+state 74
 
     (14) Parametros -> ID COMMA Parametros .
 
     RPARENTH        reduce using rule 14 (Parametros -> ID COMMA Parametros .)
 
 
-state 78
+state 75
 
     (15) Parametros -> ID COLON TYPE .
 
     RPARENTH        reduce using rule 15 (Parametros -> ID COLON TYPE .)
 
 
-state 79
+state 76
 
     (11) Funcion -> TipoFunc ID LPARENTH Parametros RPARENTH COLON . Body
     (17) Body -> . LBRACE Statements RBRACE
 
-    LBRACE          shift and go to state 24
+    LBRACE          shift and go to state 23
 
-    Body                           shift and go to state 97
+    Body                           shift and go to state 94
 
-state 80
+state 77
 
     (25) ASSIGN -> ID EQUAL Expresion SEMICOLON .
 
@@ -1208,7 +1181,7 @@ state 80
     RBRACE          reduce using rule 25 (ASSIGN -> ID EQUAL Expresion SEMICOLON .)
 
 
-state 81
+state 78
 
     (35) Expresion -> Expresion NOTEQUAL . Exp
     (39) Exp -> . Exp PLUS Termino
@@ -1227,21 +1200,21 @@ state 81
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Exp                            shift and go to state 98
-    Termino                        shift and go to state 62
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Exp                            shift and go to state 95
+    Termino                        shift and go to state 59
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 82
+state 79
 
     (36) Expresion -> Expresion LESSTHAN . Exp
     (39) Exp -> . Exp PLUS Termino
@@ -1260,21 +1233,21 @@ state 82
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Exp                            shift and go to state 99
-    Termino                        shift and go to state 62
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Exp                            shift and go to state 96
+    Termino                        shift and go to state 59
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 83
+state 80
 
     (37) Expresion -> Expresion GREATERTHAN . Exp
     (39) Exp -> . Exp PLUS Termino
@@ -1293,21 +1266,21 @@ state 83
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Exp                            shift and go to state 100
-    Termino                        shift and go to state 62
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Exp                            shift and go to state 97
+    Termino                        shift and go to state 59
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 84
+state 81
 
     (39) Exp -> Exp PLUS . Termino
     (42) Termino -> . Termino MULTIPLY Factor
@@ -1323,20 +1296,20 @@ state 84
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Termino                        shift and go to state 101
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Termino                        shift and go to state 98
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 85
+state 82
 
     (40) Exp -> Exp MINUS . Termino
     (42) Termino -> . Termino MULTIPLY Factor
@@ -1352,20 +1325,20 @@ state 85
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Termino                        shift and go to state 102
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Termino                        shift and go to state 99
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 86
+state 83
 
     (46) Factor -> PLUS Subf .
 
@@ -1381,7 +1354,7 @@ state 86
     RPARENTH        reduce using rule 46 (Factor -> PLUS Subf .)
 
 
-state 87
+state 84
 
     (42) Termino -> Termino MULTIPLY . Factor
     (45) Factor -> . LPARENTH Expresion RPARENTH
@@ -1394,19 +1367,19 @@ state 87
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Factor                         shift and go to state 103
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Factor                         shift and go to state 100
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 88
+state 85
 
     (43) Termino -> Termino DIVIDE . Factor
     (45) Factor -> . LPARENTH Expresion RPARENTH
@@ -1419,19 +1392,19 @@ state 88
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Factor                         shift and go to state 104
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Factor                         shift and go to state 101
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 89
+state 86
 
     (47) Factor -> MINUS Subf .
 
@@ -1447,27 +1420,27 @@ state 89
     RPARENTH        reduce using rule 47 (Factor -> MINUS Subf .)
 
 
-state 90
+state 87
 
     (45) Factor -> LPARENTH Expresion . RPARENTH
     (35) Expresion -> Expresion . NOTEQUAL Exp
     (36) Expresion -> Expresion . LESSTHAN Exp
     (37) Expresion -> Expresion . GREATERTHAN Exp
 
-    RPARENTH        shift and go to state 105
-    NOTEQUAL        shift and go to state 81
-    LESSTHAN        shift and go to state 82
-    GREATERTHAN     shift and go to state 83
+    RPARENTH        shift and go to state 102
+    NOTEQUAL        shift and go to state 78
+    LESSTHAN        shift and go to state 79
+    GREATERTHAN     shift and go to state 80
 
 
-state 91
+state 88
 
     (30) F_Call -> ID LPARENTH Expresiones RPARENTH . SEMICOLON
 
-    SEMICOLON       shift and go to state 106
+    SEMICOLON       shift and go to state 103
 
 
-state 92
+state 89
 
     (31) Expresiones -> Expresion COMMA . Expresiones
     (31) Expresiones -> . Expresion COMMA Expresiones
@@ -1494,42 +1467,42 @@ state 92
     (53) CTE -> . CTE_STRING
 
     RPARENTH        reduce using rule 33 (Expresiones -> .)
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Expresion                      shift and go to state 72
-    Expresiones                    shift and go to state 107
-    Exp                            shift and go to state 60
-    Termino                        shift and go to state 62
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Expresion                      shift and go to state 69
+    Expresiones                    shift and go to state 104
+    Exp                            shift and go to state 57
+    Termino                        shift and go to state 59
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 93
+state 90
 
     (26) CONDITION -> IF LPARENTH Expresion RPARENTH . Body
     (27) CONDITION -> IF LPARENTH Expresion RPARENTH . Body ELSE Body
     (17) Body -> . LBRACE Statements RBRACE
 
-    LBRACE          shift and go to state 24
+    LBRACE          shift and go to state 23
 
-    Body                           shift and go to state 108
+    Body                           shift and go to state 105
 
-state 94
+state 91
 
     (28) CYCLE -> WHILE LPARENTH Expresion RPARENTH . Body SEMICOLON
     (17) Body -> . LBRACE Statements RBRACE
 
-    LBRACE          shift and go to state 24
+    LBRACE          shift and go to state 23
 
-    Body                           shift and go to state 109
+    Body                           shift and go to state 106
 
-state 95
+state 92
 
     (29) CYCLE -> DO Body WHILE LPARENTH . Expresion RPARENTH SEMICOLON
     (35) Expresion -> . Expresion NOTEQUAL Exp
@@ -1552,29 +1525,29 @@ state 95
     (52) CTE -> . CTE_FLOAT
     (53) CTE -> . CTE_STRING
 
-    LPARENTH        shift and go to state 65
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 63
-    ID              shift and go to state 58
-    CTE_INT         shift and go to state 68
-    CTE_FLOAT       shift and go to state 69
-    CTE_STRING      shift and go to state 70
+    LPARENTH        shift and go to state 62
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 60
+    ID              shift and go to state 55
+    CTE_INT         shift and go to state 65
+    CTE_FLOAT       shift and go to state 66
+    CTE_STRING      shift and go to state 67
 
-    Expresion                      shift and go to state 110
-    Exp                            shift and go to state 60
-    Termino                        shift and go to state 62
-    Factor                         shift and go to state 64
-    Subf                           shift and go to state 66
-    CTE                            shift and go to state 67
+    Expresion                      shift and go to state 107
+    Exp                            shift and go to state 57
+    Termino                        shift and go to state 59
+    Factor                         shift and go to state 61
+    Subf                           shift and go to state 63
+    CTE                            shift and go to state 64
 
-state 96
+state 93
 
     (34) Print -> PRINT LPARENTH Expresiones RPARENTH . SEMICOLON
 
-    SEMICOLON       shift and go to state 111
+    SEMICOLON       shift and go to state 108
 
 
-state 97
+state 94
 
     (11) Funcion -> TipoFunc ID LPARENTH Parametros RPARENTH COLON Body .
 
@@ -1585,7 +1558,7 @@ state 97
     MAIN            reduce using rule 11 (Funcion -> TipoFunc ID LPARENTH Parametros RPARENTH COLON Body .)
 
 
-state 98
+state 95
 
     (35) Expresion -> Expresion NOTEQUAL Exp .
     (39) Exp -> Exp . PLUS Termino
@@ -1597,11 +1570,11 @@ state 98
     GREATERTHAN     reduce using rule 35 (Expresion -> Expresion NOTEQUAL Exp .)
     COMMA           reduce using rule 35 (Expresion -> Expresion NOTEQUAL Exp .)
     RPARENTH        reduce using rule 35 (Expresion -> Expresion NOTEQUAL Exp .)
-    PLUS            shift and go to state 84
-    MINUS           shift and go to state 85
+    PLUS            shift and go to state 81
+    MINUS           shift and go to state 82
 
 
-state 99
+state 96
 
     (36) Expresion -> Expresion LESSTHAN Exp .
     (39) Exp -> Exp . PLUS Termino
@@ -1613,11 +1586,11 @@ state 99
     GREATERTHAN     reduce using rule 36 (Expresion -> Expresion LESSTHAN Exp .)
     COMMA           reduce using rule 36 (Expresion -> Expresion LESSTHAN Exp .)
     RPARENTH        reduce using rule 36 (Expresion -> Expresion LESSTHAN Exp .)
-    PLUS            shift and go to state 84
-    MINUS           shift and go to state 85
+    PLUS            shift and go to state 81
+    MINUS           shift and go to state 82
 
 
-state 100
+state 97
 
     (37) Expresion -> Expresion GREATERTHAN Exp .
     (39) Exp -> Exp . PLUS Termino
@@ -1629,11 +1602,11 @@ state 100
     GREATERTHAN     reduce using rule 37 (Expresion -> Expresion GREATERTHAN Exp .)
     COMMA           reduce using rule 37 (Expresion -> Expresion GREATERTHAN Exp .)
     RPARENTH        reduce using rule 37 (Expresion -> Expresion GREATERTHAN Exp .)
-    PLUS            shift and go to state 84
-    MINUS           shift and go to state 85
+    PLUS            shift and go to state 81
+    MINUS           shift and go to state 82
 
 
-state 101
+state 98
 
     (39) Exp -> Exp PLUS Termino .
     (42) Termino -> Termino . MULTIPLY Factor
@@ -1647,11 +1620,11 @@ state 101
     GREATERTHAN     reduce using rule 39 (Exp -> Exp PLUS Termino .)
     COMMA           reduce using rule 39 (Exp -> Exp PLUS Termino .)
     RPARENTH        reduce using rule 39 (Exp -> Exp PLUS Termino .)
-    MULTIPLY        shift and go to state 87
-    DIVIDE          shift and go to state 88
+    MULTIPLY        shift and go to state 84
+    DIVIDE          shift and go to state 85
 
 
-state 102
+state 99
 
     (40) Exp -> Exp MINUS Termino .
     (42) Termino -> Termino . MULTIPLY Factor
@@ -1665,11 +1638,11 @@ state 102
     GREATERTHAN     reduce using rule 40 (Exp -> Exp MINUS Termino .)
     COMMA           reduce using rule 40 (Exp -> Exp MINUS Termino .)
     RPARENTH        reduce using rule 40 (Exp -> Exp MINUS Termino .)
-    MULTIPLY        shift and go to state 87
-    DIVIDE          shift and go to state 88
+    MULTIPLY        shift and go to state 84
+    DIVIDE          shift and go to state 85
 
 
-state 103
+state 100
 
     (42) Termino -> Termino MULTIPLY Factor .
 
@@ -1685,7 +1658,7 @@ state 103
     RPARENTH        reduce using rule 42 (Termino -> Termino MULTIPLY Factor .)
 
 
-state 104
+state 101
 
     (43) Termino -> Termino DIVIDE Factor .
 
@@ -1701,7 +1674,7 @@ state 104
     RPARENTH        reduce using rule 43 (Termino -> Termino DIVIDE Factor .)
 
 
-state 105
+state 102
 
     (45) Factor -> LPARENTH Expresion RPARENTH .
 
@@ -1717,7 +1690,7 @@ state 105
     RPARENTH        reduce using rule 45 (Factor -> LPARENTH Expresion RPARENTH .)
 
 
-state 106
+state 103
 
     (30) F_Call -> ID LPARENTH Expresiones RPARENTH SEMICOLON .
 
@@ -1729,14 +1702,14 @@ state 106
     RBRACE          reduce using rule 30 (F_Call -> ID LPARENTH Expresiones RPARENTH SEMICOLON .)
 
 
-state 107
+state 104
 
     (31) Expresiones -> Expresion COMMA Expresiones .
 
     RPARENTH        reduce using rule 31 (Expresiones -> Expresion COMMA Expresiones .)
 
 
-state 108
+state 105
 
     (26) CONDITION -> IF LPARENTH Expresion RPARENTH Body .
     (27) CONDITION -> IF LPARENTH Expresion RPARENTH Body . ELSE Body
@@ -1747,30 +1720,30 @@ state 108
     DO              reduce using rule 26 (CONDITION -> IF LPARENTH Expresion RPARENTH Body .)
     PRINT           reduce using rule 26 (CONDITION -> IF LPARENTH Expresion RPARENTH Body .)
     RBRACE          reduce using rule 26 (CONDITION -> IF LPARENTH Expresion RPARENTH Body .)
-    ELSE            shift and go to state 112
+    ELSE            shift and go to state 109
 
 
-state 109
+state 106
 
     (28) CYCLE -> WHILE LPARENTH Expresion RPARENTH Body . SEMICOLON
 
-    SEMICOLON       shift and go to state 113
+    SEMICOLON       shift and go to state 110
 
 
-state 110
+state 107
 
     (29) CYCLE -> DO Body WHILE LPARENTH Expresion . RPARENTH SEMICOLON
     (35) Expresion -> Expresion . NOTEQUAL Exp
     (36) Expresion -> Expresion . LESSTHAN Exp
     (37) Expresion -> Expresion . GREATERTHAN Exp
 
-    RPARENTH        shift and go to state 114
-    NOTEQUAL        shift and go to state 81
-    LESSTHAN        shift and go to state 82
-    GREATERTHAN     shift and go to state 83
+    RPARENTH        shift and go to state 111
+    NOTEQUAL        shift and go to state 78
+    LESSTHAN        shift and go to state 79
+    GREATERTHAN     shift and go to state 80
 
 
-state 111
+state 108
 
     (34) Print -> PRINT LPARENTH Expresiones RPARENTH SEMICOLON .
 
@@ -1782,16 +1755,16 @@ state 111
     RBRACE          reduce using rule 34 (Print -> PRINT LPARENTH Expresiones RPARENTH SEMICOLON .)
 
 
-state 112
+state 109
 
     (27) CONDITION -> IF LPARENTH Expresion RPARENTH Body ELSE . Body
     (17) Body -> . LBRACE Statements RBRACE
 
-    LBRACE          shift and go to state 24
+    LBRACE          shift and go to state 23
 
-    Body                           shift and go to state 115
+    Body                           shift and go to state 112
 
-state 113
+state 110
 
     (28) CYCLE -> WHILE LPARENTH Expresion RPARENTH Body SEMICOLON .
 
@@ -1803,14 +1776,14 @@ state 113
     RBRACE          reduce using rule 28 (CYCLE -> WHILE LPARENTH Expresion RPARENTH Body SEMICOLON .)
 
 
-state 114
+state 111
 
     (29) CYCLE -> DO Body WHILE LPARENTH Expresion RPARENTH . SEMICOLON
 
-    SEMICOLON       shift and go to state 116
+    SEMICOLON       shift and go to state 113
 
 
-state 115
+state 112
 
     (27) CONDITION -> IF LPARENTH Expresion RPARENTH Body ELSE Body .
 
@@ -1822,7 +1795,7 @@ state 115
     RBRACE          reduce using rule 27 (CONDITION -> IF LPARENTH Expresion RPARENTH Body ELSE Body .)
 
 
-state 116
+state 113
 
     (29) CYCLE -> DO Body WHILE LPARENTH Expresion RPARENTH SEMICOLON .
 
