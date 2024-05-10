@@ -105,9 +105,9 @@ def p_print(p):
 
 def p_expresion(p):
     '''
-    Expresion : Expresion NOTEQUAL Exp
+    Expresion : Expresion GREATERTHAN Exp
               | Expresion LESSTHAN Exp
-              | Expresion GREATERTHAN Exp
+              | Expresion NOTEQUAL Exp
               | Exp
     '''
 
