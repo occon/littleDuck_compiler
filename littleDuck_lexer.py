@@ -2,10 +2,9 @@ import ply.lex as lex
 
 tokens = [
     'ID',
-    'cteInt',
-    'cteFloat', 
-    'cteChar',
-    'cteString',
+    'CTE_INT',
+    'CTE_FLOAT', 
+    'CTE_STRING',
     'PLUS',
     'MINUS',
     'MULTIPLY',
@@ -20,7 +19,7 @@ tokens = [
     'NOTEQUAL',
     'COMMA',
     'COLON',
-    'SEMICOLON'
+    'SEMICOLON',
 ]
 
 reserved = {
@@ -65,17 +64,17 @@ def t_ID(t):
     t.type = reserved.get(t.value, 'ID')
     return t
 
-def t_cteInt(t):
+def t_CTE_INT(t):
     r'\d+'
     t.value = int(t.value)
     return t
 
-def t_cteFloat(t):
+def t_CTE_FLOAT(t):
     r'\d+.\d+'
     t.value = float(t.value)
     return t
 
-def t_cteString(t):
+def t_CTE_STRING(t):
     r'"(\\.|[^"\\])*"'
     t.value = str(t.value)
     return t
