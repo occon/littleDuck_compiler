@@ -1,6 +1,7 @@
 import ply.lex as lex
 
 tokens = [
+    'ID',
     'cteInt',
     'cteFloat', 
     'cteChar',
@@ -11,6 +12,8 @@ tokens = [
     'DIVIDE',
     'LPARENTH',
     'RPARENTH',
+    'LBRACE',
+    'RBRACE',
     'LESSTHAN',
     'GREATERTHAN',
     'EQUAL',
@@ -33,10 +36,8 @@ reserved = {
     'while': 'WHILE',
     'print': 'PRINT',
     'do': 'DO',
-    'end': 'END'
+    'end': 'END',
 }
-
-operators = [ '+', '-', '*', '/' ]
 
 tokens += list(reserved.values())
 
@@ -46,6 +47,8 @@ t_MULTIPLY = r'\*'
 t_DIVIDE = r'\/'
 t_LPARENTH = r'\('
 t_RPARENTH = r'\)'
+t_LBRACE = r'\{'
+t_RBRACE = r'\}'
 t_LESSTHAN = r'\<'
 t_GREATERTHAN = r'\>'
 t_EQUAL = r'='
@@ -54,7 +57,13 @@ t_COMMA = r','
 t_COLON = r':'
 t_SEMICOLON = r';'
 
-t_ignore    = ' \t'
+t_ignore = ' \t'
+
+
+def t_ID(t):
+    r'[a-zA-Z_][a-zA-Z0-9_]*'
+    t.type = reserved.get(t.value, 'ID')
+    return t
 
 def t_cteInt(t):
     r'\d+'
@@ -71,7 +80,6 @@ def t_cteString(t):
     t.value = str(t.value)
     return t
 
-
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
@@ -82,17 +90,21 @@ def t_error(t):
 
 lexer = lex.lex()
 
-# Test it out
-data = '''
-3 + 4 * 10
-  + -20 *2
-'''
-
-lexer.input(data)
-
-# Tokenize
-while True:
-    tok = lexer.token()
-    if not tok: 
-        break      # No more input
-    print(tok)
+if __name__ == '__main__':
+    data = '''
+    program programa1;
+    var a: int, b: float;
+    main {
+        print("Hello World!");
+        if (x = 1) {
+            print("x is equal to 1");
+        }
+    }
+    end
+    '''
+    lexer.input(data)
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        print(tok)
