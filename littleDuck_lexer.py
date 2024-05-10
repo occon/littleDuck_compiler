@@ -11,6 +11,13 @@ tokens = [
     'DIVIDE',
     'LPARENTH',
     'RPARENTH',
+    'LESSTHAN',
+    'GREATERTHAN',
+    'EQUAL',
+    'NOTEQUAL',
+    'COMMA',
+    'COLON',
+    'SEMICOLON'
 ]
 
 reserved = {
@@ -39,6 +46,13 @@ t_MULTIPLY = r'\*'
 t_DIVIDE = r'\/'
 t_LPARENTH = r'\('
 t_RPARENTH = r'\)'
+t_LESSTHAN = r'\<'
+t_GREATERTHAN = r'\>'
+t_EQUAL = r'='
+t_NOTEQUAL = r'!='
+t_COMMA = r','
+t_COLON = r':'
+t_SEMICOLON = r';'
 
 t_ignore    = ' \t'
 
