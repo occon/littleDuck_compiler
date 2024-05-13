@@ -1,4 +1,21 @@
-import ply.lex as lex
+from ply import lex
+
+
+reserved = {
+    'program': 'PROGRAM',
+    'main': 'MAIN',
+    'void': 'VOID',
+    'int': 'INT',
+    'float': 'FLOAT',
+    'string': 'STRING',
+    'var': 'VAR',
+    'if': 'IF',
+    'else': 'ELSE',
+    'while': 'WHILE',
+    'print': 'PRINT',
+    'do': 'DO',
+    'end': 'END',
+}
 
 tokens = [
     'ID',
@@ -20,25 +37,9 @@ tokens = [
     'COMMA',
     'COLON',
     'SEMICOLON',
-]
+] + list(reserved.values())
 
-reserved = {
-    'program': 'PROGRAM',
-    'main': 'MAIN',
-    'void': 'VOID',
-    'int': 'INT',
-    'float': 'FLOAT',
-    'string': 'STRING',
-    'var': 'VAR',
-    'if': 'IF',
-    'else': 'ELSE',
-    'while': 'WHILE',
-    'print': 'PRINT',
-    'do': 'DO',
-    'end': 'END',
-}
-
-tokens += list(reserved.values())
+# tokens += list(reserved.values())
 
 t_PLUS = r'\+'
 t_MINUS = r'\-'
@@ -54,7 +55,7 @@ t_EQUAL = r'='
 t_NOTEQUAL = r'!='
 t_COMMA = r','
 t_COLON = r':'
-t_SEMICOLON = r';'
+t_SEMICOLON = r';' 
 
 t_ignore = ' \t'
 
@@ -64,19 +65,20 @@ def t_ID(t):
     t.type = reserved.get(t.value, 'ID')
     return t
 
-def t_CTE_INT(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
-
 def t_CTE_FLOAT(t):
-    r'\d+.\d+'
+    r'[-]?\d+\.\d+'
     t.value = float(t.value)
     return t
 
+def t_CTE_INT(t):
+    r'[-]?\d+'
+    t.value = int(t.value)
+    return t
+
+
 def t_CTE_STRING(t):
     r'"(\\.|[^"\\])*"'
-    t.value = str(t.value)
+    t.value = t.value.strip('"')
     return t
 
 def t_newline(t):
@@ -93,6 +95,7 @@ if __name__ == '__main__':
     data = '''
     program programa1;
     var a: int, b: float;
+    b = 4.56;
     main {
         print("Hello World!");
         if (x = 1) {

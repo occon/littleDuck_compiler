@@ -37,9 +37,9 @@ Rule 31    Expresiones -> Expresion COMMA Expresiones
 Rule 32    Expresiones -> Expresion
 Rule 33    Expresiones -> <empty>
 Rule 34    Print -> PRINT LPARENTH Expresiones RPARENTH SEMICOLON
-Rule 35    Expresion -> Expresion NOTEQUAL Exp
+Rule 35    Expresion -> Expresion GREATERTHAN Exp
 Rule 36    Expresion -> Expresion LESSTHAN Exp
-Rule 37    Expresion -> Expresion GREATERTHAN Exp
+Rule 37    Expresion -> Expresion NOTEQUAL Exp
 Rule 38    Expresion -> Exp
 Rule 39    Exp -> Exp PLUS Termino
 Rule 40    Exp -> Exp MINUS Termino
@@ -70,7 +70,7 @@ ELSE                 : 27
 END                  : 1
 EQUAL                : 25
 FLOAT                : 7
-GREATERTHAN          : 37
+GREATERTHAN          : 35
 ID                   : 1 4 5 11 14 15 25 30 50
 IF                   : 26 27
 INT                  : 6
@@ -80,7 +80,7 @@ LPARENTH             : 11 26 27 28 29 30 34 45
 MAIN                 : 1
 MINUS                : 40 47
 MULTIPLY             : 42
-NOTEQUAL             : 35
+NOTEQUAL             : 37
 PLUS                 : 39 46
 PRINT                : 34
 PROGRAM              : 1
@@ -615,9 +615,9 @@ state 45
 state 46
 
     (25) ASSIGN -> ID EQUAL . Expresion SEMICOLON
-    (35) Expresion -> . Expresion NOTEQUAL Exp
+    (35) Expresion -> . Expresion GREATERTHAN Exp
     (36) Expresion -> . Expresion LESSTHAN Exp
-    (37) Expresion -> . Expresion GREATERTHAN Exp
+    (37) Expresion -> . Expresion NOTEQUAL Exp
     (38) Expresion -> . Exp
     (39) Exp -> . Exp PLUS Termino
     (40) Exp -> . Exp MINUS Termino
@@ -656,9 +656,9 @@ state 47
     (31) Expresiones -> . Expresion COMMA Expresiones
     (32) Expresiones -> . Expresion
     (33) Expresiones -> .
-    (35) Expresion -> . Expresion NOTEQUAL Exp
+    (35) Expresion -> . Expresion GREATERTHAN Exp
     (36) Expresion -> . Expresion LESSTHAN Exp
-    (37) Expresion -> . Expresion GREATERTHAN Exp
+    (37) Expresion -> . Expresion NOTEQUAL Exp
     (38) Expresion -> . Exp
     (39) Exp -> . Exp PLUS Termino
     (40) Exp -> . Exp MINUS Termino
@@ -697,9 +697,9 @@ state 48
 
     (26) CONDITION -> IF LPARENTH . Expresion RPARENTH Body
     (27) CONDITION -> IF LPARENTH . Expresion RPARENTH Body ELSE Body
-    (35) Expresion -> . Expresion NOTEQUAL Exp
+    (35) Expresion -> . Expresion GREATERTHAN Exp
     (36) Expresion -> . Expresion LESSTHAN Exp
-    (37) Expresion -> . Expresion GREATERTHAN Exp
+    (37) Expresion -> . Expresion NOTEQUAL Exp
     (38) Expresion -> . Exp
     (39) Exp -> . Exp PLUS Termino
     (40) Exp -> . Exp MINUS Termino
@@ -735,9 +735,9 @@ state 48
 state 49
 
     (28) CYCLE -> WHILE LPARENTH . Expresion RPARENTH Body SEMICOLON
-    (35) Expresion -> . Expresion NOTEQUAL Exp
+    (35) Expresion -> . Expresion GREATERTHAN Exp
     (36) Expresion -> . Expresion LESSTHAN Exp
-    (37) Expresion -> . Expresion GREATERTHAN Exp
+    (37) Expresion -> . Expresion NOTEQUAL Exp
     (38) Expresion -> . Exp
     (39) Exp -> . Exp PLUS Termino
     (40) Exp -> . Exp MINUS Termino
@@ -783,9 +783,9 @@ state 51
     (31) Expresiones -> . Expresion COMMA Expresiones
     (32) Expresiones -> . Expresion
     (33) Expresiones -> .
-    (35) Expresion -> . Expresion NOTEQUAL Exp
+    (35) Expresion -> . Expresion GREATERTHAN Exp
     (36) Expresion -> . Expresion LESSTHAN Exp
-    (37) Expresion -> . Expresion GREATERTHAN Exp
+    (37) Expresion -> . Expresion NOTEQUAL Exp
     (38) Expresion -> . Exp
     (39) Exp -> . Exp PLUS Termino
     (40) Exp -> . Exp MINUS Termino
@@ -861,9 +861,9 @@ state 55
     PLUS            reduce using rule 50 (Subf -> ID .)
     MINUS           reduce using rule 50 (Subf -> ID .)
     SEMICOLON       reduce using rule 50 (Subf -> ID .)
-    NOTEQUAL        reduce using rule 50 (Subf -> ID .)
-    LESSTHAN        reduce using rule 50 (Subf -> ID .)
     GREATERTHAN     reduce using rule 50 (Subf -> ID .)
+    LESSTHAN        reduce using rule 50 (Subf -> ID .)
+    NOTEQUAL        reduce using rule 50 (Subf -> ID .)
     COMMA           reduce using rule 50 (Subf -> ID .)
     RPARENTH        reduce using rule 50 (Subf -> ID .)
 
@@ -871,14 +871,14 @@ state 55
 state 56
 
     (25) ASSIGN -> ID EQUAL Expresion . SEMICOLON
-    (35) Expresion -> Expresion . NOTEQUAL Exp
+    (35) Expresion -> Expresion . GREATERTHAN Exp
     (36) Expresion -> Expresion . LESSTHAN Exp
-    (37) Expresion -> Expresion . GREATERTHAN Exp
+    (37) Expresion -> Expresion . NOTEQUAL Exp
 
     SEMICOLON       shift and go to state 77
-    NOTEQUAL        shift and go to state 78
+    GREATERTHAN     shift and go to state 78
     LESSTHAN        shift and go to state 79
-    GREATERTHAN     shift and go to state 80
+    NOTEQUAL        shift and go to state 80
 
 
 state 57
@@ -888,9 +888,9 @@ state 57
     (40) Exp -> Exp . MINUS Termino
 
     SEMICOLON       reduce using rule 38 (Expresion -> Exp .)
-    NOTEQUAL        reduce using rule 38 (Expresion -> Exp .)
-    LESSTHAN        reduce using rule 38 (Expresion -> Exp .)
     GREATERTHAN     reduce using rule 38 (Expresion -> Exp .)
+    LESSTHAN        reduce using rule 38 (Expresion -> Exp .)
+    NOTEQUAL        reduce using rule 38 (Expresion -> Exp .)
     COMMA           reduce using rule 38 (Expresion -> Exp .)
     RPARENTH        reduce using rule 38 (Expresion -> Exp .)
     PLUS            shift and go to state 81
@@ -923,9 +923,9 @@ state 59
     PLUS            reduce using rule 41 (Exp -> Termino .)
     MINUS           reduce using rule 41 (Exp -> Termino .)
     SEMICOLON       reduce using rule 41 (Exp -> Termino .)
-    NOTEQUAL        reduce using rule 41 (Exp -> Termino .)
-    LESSTHAN        reduce using rule 41 (Exp -> Termino .)
     GREATERTHAN     reduce using rule 41 (Exp -> Termino .)
+    LESSTHAN        reduce using rule 41 (Exp -> Termino .)
+    NOTEQUAL        reduce using rule 41 (Exp -> Termino .)
     COMMA           reduce using rule 41 (Exp -> Termino .)
     RPARENTH        reduce using rule 41 (Exp -> Termino .)
     MULTIPLY        shift and go to state 84
@@ -958,9 +958,9 @@ state 61
     PLUS            reduce using rule 44 (Termino -> Factor .)
     MINUS           reduce using rule 44 (Termino -> Factor .)
     SEMICOLON       reduce using rule 44 (Termino -> Factor .)
-    NOTEQUAL        reduce using rule 44 (Termino -> Factor .)
-    LESSTHAN        reduce using rule 44 (Termino -> Factor .)
     GREATERTHAN     reduce using rule 44 (Termino -> Factor .)
+    LESSTHAN        reduce using rule 44 (Termino -> Factor .)
+    NOTEQUAL        reduce using rule 44 (Termino -> Factor .)
     COMMA           reduce using rule 44 (Termino -> Factor .)
     RPARENTH        reduce using rule 44 (Termino -> Factor .)
 
@@ -968,9 +968,9 @@ state 61
 state 62
 
     (45) Factor -> LPARENTH . Expresion RPARENTH
-    (35) Expresion -> . Expresion NOTEQUAL Exp
+    (35) Expresion -> . Expresion GREATERTHAN Exp
     (36) Expresion -> . Expresion LESSTHAN Exp
-    (37) Expresion -> . Expresion GREATERTHAN Exp
+    (37) Expresion -> . Expresion NOTEQUAL Exp
     (38) Expresion -> . Exp
     (39) Exp -> . Exp PLUS Termino
     (40) Exp -> . Exp MINUS Termino
@@ -1012,9 +1012,9 @@ state 63
     PLUS            reduce using rule 48 (Factor -> Subf .)
     MINUS           reduce using rule 48 (Factor -> Subf .)
     SEMICOLON       reduce using rule 48 (Factor -> Subf .)
-    NOTEQUAL        reduce using rule 48 (Factor -> Subf .)
-    LESSTHAN        reduce using rule 48 (Factor -> Subf .)
     GREATERTHAN     reduce using rule 48 (Factor -> Subf .)
+    LESSTHAN        reduce using rule 48 (Factor -> Subf .)
+    NOTEQUAL        reduce using rule 48 (Factor -> Subf .)
     COMMA           reduce using rule 48 (Factor -> Subf .)
     RPARENTH        reduce using rule 48 (Factor -> Subf .)
 
@@ -1028,9 +1028,9 @@ state 64
     PLUS            reduce using rule 49 (Subf -> CTE .)
     MINUS           reduce using rule 49 (Subf -> CTE .)
     SEMICOLON       reduce using rule 49 (Subf -> CTE .)
-    NOTEQUAL        reduce using rule 49 (Subf -> CTE .)
-    LESSTHAN        reduce using rule 49 (Subf -> CTE .)
     GREATERTHAN     reduce using rule 49 (Subf -> CTE .)
+    LESSTHAN        reduce using rule 49 (Subf -> CTE .)
+    NOTEQUAL        reduce using rule 49 (Subf -> CTE .)
     COMMA           reduce using rule 49 (Subf -> CTE .)
     RPARENTH        reduce using rule 49 (Subf -> CTE .)
 
@@ -1044,9 +1044,9 @@ state 65
     PLUS            reduce using rule 51 (CTE -> CTE_INT .)
     MINUS           reduce using rule 51 (CTE -> CTE_INT .)
     SEMICOLON       reduce using rule 51 (CTE -> CTE_INT .)
-    NOTEQUAL        reduce using rule 51 (CTE -> CTE_INT .)
-    LESSTHAN        reduce using rule 51 (CTE -> CTE_INT .)
     GREATERTHAN     reduce using rule 51 (CTE -> CTE_INT .)
+    LESSTHAN        reduce using rule 51 (CTE -> CTE_INT .)
+    NOTEQUAL        reduce using rule 51 (CTE -> CTE_INT .)
     COMMA           reduce using rule 51 (CTE -> CTE_INT .)
     RPARENTH        reduce using rule 51 (CTE -> CTE_INT .)
 
@@ -1060,9 +1060,9 @@ state 66
     PLUS            reduce using rule 52 (CTE -> CTE_FLOAT .)
     MINUS           reduce using rule 52 (CTE -> CTE_FLOAT .)
     SEMICOLON       reduce using rule 52 (CTE -> CTE_FLOAT .)
-    NOTEQUAL        reduce using rule 52 (CTE -> CTE_FLOAT .)
-    LESSTHAN        reduce using rule 52 (CTE -> CTE_FLOAT .)
     GREATERTHAN     reduce using rule 52 (CTE -> CTE_FLOAT .)
+    LESSTHAN        reduce using rule 52 (CTE -> CTE_FLOAT .)
+    NOTEQUAL        reduce using rule 52 (CTE -> CTE_FLOAT .)
     COMMA           reduce using rule 52 (CTE -> CTE_FLOAT .)
     RPARENTH        reduce using rule 52 (CTE -> CTE_FLOAT .)
 
@@ -1076,9 +1076,9 @@ state 67
     PLUS            reduce using rule 53 (CTE -> CTE_STRING .)
     MINUS           reduce using rule 53 (CTE -> CTE_STRING .)
     SEMICOLON       reduce using rule 53 (CTE -> CTE_STRING .)
-    NOTEQUAL        reduce using rule 53 (CTE -> CTE_STRING .)
-    LESSTHAN        reduce using rule 53 (CTE -> CTE_STRING .)
     GREATERTHAN     reduce using rule 53 (CTE -> CTE_STRING .)
+    LESSTHAN        reduce using rule 53 (CTE -> CTE_STRING .)
+    NOTEQUAL        reduce using rule 53 (CTE -> CTE_STRING .)
     COMMA           reduce using rule 53 (CTE -> CTE_STRING .)
     RPARENTH        reduce using rule 53 (CTE -> CTE_STRING .)
 
@@ -1094,42 +1094,42 @@ state 69
 
     (31) Expresiones -> Expresion . COMMA Expresiones
     (32) Expresiones -> Expresion .
-    (35) Expresion -> Expresion . NOTEQUAL Exp
+    (35) Expresion -> Expresion . GREATERTHAN Exp
     (36) Expresion -> Expresion . LESSTHAN Exp
-    (37) Expresion -> Expresion . GREATERTHAN Exp
+    (37) Expresion -> Expresion . NOTEQUAL Exp
 
     COMMA           shift and go to state 89
     RPARENTH        reduce using rule 32 (Expresiones -> Expresion .)
-    NOTEQUAL        shift and go to state 78
+    GREATERTHAN     shift and go to state 78
     LESSTHAN        shift and go to state 79
-    GREATERTHAN     shift and go to state 80
+    NOTEQUAL        shift and go to state 80
 
 
 state 70
 
     (26) CONDITION -> IF LPARENTH Expresion . RPARENTH Body
     (27) CONDITION -> IF LPARENTH Expresion . RPARENTH Body ELSE Body
-    (35) Expresion -> Expresion . NOTEQUAL Exp
+    (35) Expresion -> Expresion . GREATERTHAN Exp
     (36) Expresion -> Expresion . LESSTHAN Exp
-    (37) Expresion -> Expresion . GREATERTHAN Exp
+    (37) Expresion -> Expresion . NOTEQUAL Exp
 
     RPARENTH        shift and go to state 90
-    NOTEQUAL        shift and go to state 78
+    GREATERTHAN     shift and go to state 78
     LESSTHAN        shift and go to state 79
-    GREATERTHAN     shift and go to state 80
+    NOTEQUAL        shift and go to state 80
 
 
 state 71
 
     (28) CYCLE -> WHILE LPARENTH Expresion . RPARENTH Body SEMICOLON
-    (35) Expresion -> Expresion . NOTEQUAL Exp
+    (35) Expresion -> Expresion . GREATERTHAN Exp
     (36) Expresion -> Expresion . LESSTHAN Exp
-    (37) Expresion -> Expresion . GREATERTHAN Exp
+    (37) Expresion -> Expresion . NOTEQUAL Exp
 
     RPARENTH        shift and go to state 91
-    NOTEQUAL        shift and go to state 78
+    GREATERTHAN     shift and go to state 78
     LESSTHAN        shift and go to state 79
-    GREATERTHAN     shift and go to state 80
+    NOTEQUAL        shift and go to state 80
 
 
 state 72
@@ -1183,7 +1183,7 @@ state 77
 
 state 78
 
-    (35) Expresion -> Expresion NOTEQUAL . Exp
+    (35) Expresion -> Expresion GREATERTHAN . Exp
     (39) Exp -> . Exp PLUS Termino
     (40) Exp -> . Exp MINUS Termino
     (41) Exp -> . Termino
@@ -1249,7 +1249,7 @@ state 79
 
 state 80
 
-    (37) Expresion -> Expresion GREATERTHAN . Exp
+    (37) Expresion -> Expresion NOTEQUAL . Exp
     (39) Exp -> . Exp PLUS Termino
     (40) Exp -> . Exp MINUS Termino
     (41) Exp -> . Termino
@@ -1347,9 +1347,9 @@ state 83
     PLUS            reduce using rule 46 (Factor -> PLUS Subf .)
     MINUS           reduce using rule 46 (Factor -> PLUS Subf .)
     SEMICOLON       reduce using rule 46 (Factor -> PLUS Subf .)
-    NOTEQUAL        reduce using rule 46 (Factor -> PLUS Subf .)
-    LESSTHAN        reduce using rule 46 (Factor -> PLUS Subf .)
     GREATERTHAN     reduce using rule 46 (Factor -> PLUS Subf .)
+    LESSTHAN        reduce using rule 46 (Factor -> PLUS Subf .)
+    NOTEQUAL        reduce using rule 46 (Factor -> PLUS Subf .)
     COMMA           reduce using rule 46 (Factor -> PLUS Subf .)
     RPARENTH        reduce using rule 46 (Factor -> PLUS Subf .)
 
@@ -1413,9 +1413,9 @@ state 86
     PLUS            reduce using rule 47 (Factor -> MINUS Subf .)
     MINUS           reduce using rule 47 (Factor -> MINUS Subf .)
     SEMICOLON       reduce using rule 47 (Factor -> MINUS Subf .)
-    NOTEQUAL        reduce using rule 47 (Factor -> MINUS Subf .)
-    LESSTHAN        reduce using rule 47 (Factor -> MINUS Subf .)
     GREATERTHAN     reduce using rule 47 (Factor -> MINUS Subf .)
+    LESSTHAN        reduce using rule 47 (Factor -> MINUS Subf .)
+    NOTEQUAL        reduce using rule 47 (Factor -> MINUS Subf .)
     COMMA           reduce using rule 47 (Factor -> MINUS Subf .)
     RPARENTH        reduce using rule 47 (Factor -> MINUS Subf .)
 
@@ -1423,14 +1423,14 @@ state 86
 state 87
 
     (45) Factor -> LPARENTH Expresion . RPARENTH
-    (35) Expresion -> Expresion . NOTEQUAL Exp
+    (35) Expresion -> Expresion . GREATERTHAN Exp
     (36) Expresion -> Expresion . LESSTHAN Exp
-    (37) Expresion -> Expresion . GREATERTHAN Exp
+    (37) Expresion -> Expresion . NOTEQUAL Exp
 
     RPARENTH        shift and go to state 102
-    NOTEQUAL        shift and go to state 78
+    GREATERTHAN     shift and go to state 78
     LESSTHAN        shift and go to state 79
-    GREATERTHAN     shift and go to state 80
+    NOTEQUAL        shift and go to state 80
 
 
 state 88
@@ -1446,9 +1446,9 @@ state 89
     (31) Expresiones -> . Expresion COMMA Expresiones
     (32) Expresiones -> . Expresion
     (33) Expresiones -> .
-    (35) Expresion -> . Expresion NOTEQUAL Exp
+    (35) Expresion -> . Expresion GREATERTHAN Exp
     (36) Expresion -> . Expresion LESSTHAN Exp
-    (37) Expresion -> . Expresion GREATERTHAN Exp
+    (37) Expresion -> . Expresion NOTEQUAL Exp
     (38) Expresion -> . Exp
     (39) Exp -> . Exp PLUS Termino
     (40) Exp -> . Exp MINUS Termino
@@ -1505,9 +1505,9 @@ state 91
 state 92
 
     (29) CYCLE -> DO Body WHILE LPARENTH . Expresion RPARENTH SEMICOLON
-    (35) Expresion -> . Expresion NOTEQUAL Exp
+    (35) Expresion -> . Expresion GREATERTHAN Exp
     (36) Expresion -> . Expresion LESSTHAN Exp
-    (37) Expresion -> . Expresion GREATERTHAN Exp
+    (37) Expresion -> . Expresion NOTEQUAL Exp
     (38) Expresion -> . Exp
     (39) Exp -> . Exp PLUS Termino
     (40) Exp -> . Exp MINUS Termino
@@ -1560,16 +1560,16 @@ state 94
 
 state 95
 
-    (35) Expresion -> Expresion NOTEQUAL Exp .
+    (35) Expresion -> Expresion GREATERTHAN Exp .
     (39) Exp -> Exp . PLUS Termino
     (40) Exp -> Exp . MINUS Termino
 
-    SEMICOLON       reduce using rule 35 (Expresion -> Expresion NOTEQUAL Exp .)
-    NOTEQUAL        reduce using rule 35 (Expresion -> Expresion NOTEQUAL Exp .)
-    LESSTHAN        reduce using rule 35 (Expresion -> Expresion NOTEQUAL Exp .)
-    GREATERTHAN     reduce using rule 35 (Expresion -> Expresion NOTEQUAL Exp .)
-    COMMA           reduce using rule 35 (Expresion -> Expresion NOTEQUAL Exp .)
-    RPARENTH        reduce using rule 35 (Expresion -> Expresion NOTEQUAL Exp .)
+    SEMICOLON       reduce using rule 35 (Expresion -> Expresion GREATERTHAN Exp .)
+    GREATERTHAN     reduce using rule 35 (Expresion -> Expresion GREATERTHAN Exp .)
+    LESSTHAN        reduce using rule 35 (Expresion -> Expresion GREATERTHAN Exp .)
+    NOTEQUAL        reduce using rule 35 (Expresion -> Expresion GREATERTHAN Exp .)
+    COMMA           reduce using rule 35 (Expresion -> Expresion GREATERTHAN Exp .)
+    RPARENTH        reduce using rule 35 (Expresion -> Expresion GREATERTHAN Exp .)
     PLUS            shift and go to state 81
     MINUS           shift and go to state 82
 
@@ -1581,9 +1581,9 @@ state 96
     (40) Exp -> Exp . MINUS Termino
 
     SEMICOLON       reduce using rule 36 (Expresion -> Expresion LESSTHAN Exp .)
-    NOTEQUAL        reduce using rule 36 (Expresion -> Expresion LESSTHAN Exp .)
-    LESSTHAN        reduce using rule 36 (Expresion -> Expresion LESSTHAN Exp .)
     GREATERTHAN     reduce using rule 36 (Expresion -> Expresion LESSTHAN Exp .)
+    LESSTHAN        reduce using rule 36 (Expresion -> Expresion LESSTHAN Exp .)
+    NOTEQUAL        reduce using rule 36 (Expresion -> Expresion LESSTHAN Exp .)
     COMMA           reduce using rule 36 (Expresion -> Expresion LESSTHAN Exp .)
     RPARENTH        reduce using rule 36 (Expresion -> Expresion LESSTHAN Exp .)
     PLUS            shift and go to state 81
@@ -1592,16 +1592,16 @@ state 96
 
 state 97
 
-    (37) Expresion -> Expresion GREATERTHAN Exp .
+    (37) Expresion -> Expresion NOTEQUAL Exp .
     (39) Exp -> Exp . PLUS Termino
     (40) Exp -> Exp . MINUS Termino
 
-    SEMICOLON       reduce using rule 37 (Expresion -> Expresion GREATERTHAN Exp .)
-    NOTEQUAL        reduce using rule 37 (Expresion -> Expresion GREATERTHAN Exp .)
-    LESSTHAN        reduce using rule 37 (Expresion -> Expresion GREATERTHAN Exp .)
-    GREATERTHAN     reduce using rule 37 (Expresion -> Expresion GREATERTHAN Exp .)
-    COMMA           reduce using rule 37 (Expresion -> Expresion GREATERTHAN Exp .)
-    RPARENTH        reduce using rule 37 (Expresion -> Expresion GREATERTHAN Exp .)
+    SEMICOLON       reduce using rule 37 (Expresion -> Expresion NOTEQUAL Exp .)
+    GREATERTHAN     reduce using rule 37 (Expresion -> Expresion NOTEQUAL Exp .)
+    LESSTHAN        reduce using rule 37 (Expresion -> Expresion NOTEQUAL Exp .)
+    NOTEQUAL        reduce using rule 37 (Expresion -> Expresion NOTEQUAL Exp .)
+    COMMA           reduce using rule 37 (Expresion -> Expresion NOTEQUAL Exp .)
+    RPARENTH        reduce using rule 37 (Expresion -> Expresion NOTEQUAL Exp .)
     PLUS            shift and go to state 81
     MINUS           shift and go to state 82
 
@@ -1615,9 +1615,9 @@ state 98
     PLUS            reduce using rule 39 (Exp -> Exp PLUS Termino .)
     MINUS           reduce using rule 39 (Exp -> Exp PLUS Termino .)
     SEMICOLON       reduce using rule 39 (Exp -> Exp PLUS Termino .)
-    NOTEQUAL        reduce using rule 39 (Exp -> Exp PLUS Termino .)
-    LESSTHAN        reduce using rule 39 (Exp -> Exp PLUS Termino .)
     GREATERTHAN     reduce using rule 39 (Exp -> Exp PLUS Termino .)
+    LESSTHAN        reduce using rule 39 (Exp -> Exp PLUS Termino .)
+    NOTEQUAL        reduce using rule 39 (Exp -> Exp PLUS Termino .)
     COMMA           reduce using rule 39 (Exp -> Exp PLUS Termino .)
     RPARENTH        reduce using rule 39 (Exp -> Exp PLUS Termino .)
     MULTIPLY        shift and go to state 84
@@ -1633,9 +1633,9 @@ state 99
     PLUS            reduce using rule 40 (Exp -> Exp MINUS Termino .)
     MINUS           reduce using rule 40 (Exp -> Exp MINUS Termino .)
     SEMICOLON       reduce using rule 40 (Exp -> Exp MINUS Termino .)
-    NOTEQUAL        reduce using rule 40 (Exp -> Exp MINUS Termino .)
-    LESSTHAN        reduce using rule 40 (Exp -> Exp MINUS Termino .)
     GREATERTHAN     reduce using rule 40 (Exp -> Exp MINUS Termino .)
+    LESSTHAN        reduce using rule 40 (Exp -> Exp MINUS Termino .)
+    NOTEQUAL        reduce using rule 40 (Exp -> Exp MINUS Termino .)
     COMMA           reduce using rule 40 (Exp -> Exp MINUS Termino .)
     RPARENTH        reduce using rule 40 (Exp -> Exp MINUS Termino .)
     MULTIPLY        shift and go to state 84
@@ -1651,9 +1651,9 @@ state 100
     PLUS            reduce using rule 42 (Termino -> Termino MULTIPLY Factor .)
     MINUS           reduce using rule 42 (Termino -> Termino MULTIPLY Factor .)
     SEMICOLON       reduce using rule 42 (Termino -> Termino MULTIPLY Factor .)
-    NOTEQUAL        reduce using rule 42 (Termino -> Termino MULTIPLY Factor .)
-    LESSTHAN        reduce using rule 42 (Termino -> Termino MULTIPLY Factor .)
     GREATERTHAN     reduce using rule 42 (Termino -> Termino MULTIPLY Factor .)
+    LESSTHAN        reduce using rule 42 (Termino -> Termino MULTIPLY Factor .)
+    NOTEQUAL        reduce using rule 42 (Termino -> Termino MULTIPLY Factor .)
     COMMA           reduce using rule 42 (Termino -> Termino MULTIPLY Factor .)
     RPARENTH        reduce using rule 42 (Termino -> Termino MULTIPLY Factor .)
 
@@ -1667,9 +1667,9 @@ state 101
     PLUS            reduce using rule 43 (Termino -> Termino DIVIDE Factor .)
     MINUS           reduce using rule 43 (Termino -> Termino DIVIDE Factor .)
     SEMICOLON       reduce using rule 43 (Termino -> Termino DIVIDE Factor .)
-    NOTEQUAL        reduce using rule 43 (Termino -> Termino DIVIDE Factor .)
-    LESSTHAN        reduce using rule 43 (Termino -> Termino DIVIDE Factor .)
     GREATERTHAN     reduce using rule 43 (Termino -> Termino DIVIDE Factor .)
+    LESSTHAN        reduce using rule 43 (Termino -> Termino DIVIDE Factor .)
+    NOTEQUAL        reduce using rule 43 (Termino -> Termino DIVIDE Factor .)
     COMMA           reduce using rule 43 (Termino -> Termino DIVIDE Factor .)
     RPARENTH        reduce using rule 43 (Termino -> Termino DIVIDE Factor .)
 
@@ -1683,9 +1683,9 @@ state 102
     PLUS            reduce using rule 45 (Factor -> LPARENTH Expresion RPARENTH .)
     MINUS           reduce using rule 45 (Factor -> LPARENTH Expresion RPARENTH .)
     SEMICOLON       reduce using rule 45 (Factor -> LPARENTH Expresion RPARENTH .)
-    NOTEQUAL        reduce using rule 45 (Factor -> LPARENTH Expresion RPARENTH .)
-    LESSTHAN        reduce using rule 45 (Factor -> LPARENTH Expresion RPARENTH .)
     GREATERTHAN     reduce using rule 45 (Factor -> LPARENTH Expresion RPARENTH .)
+    LESSTHAN        reduce using rule 45 (Factor -> LPARENTH Expresion RPARENTH .)
+    NOTEQUAL        reduce using rule 45 (Factor -> LPARENTH Expresion RPARENTH .)
     COMMA           reduce using rule 45 (Factor -> LPARENTH Expresion RPARENTH .)
     RPARENTH        reduce using rule 45 (Factor -> LPARENTH Expresion RPARENTH .)
 
@@ -1733,14 +1733,14 @@ state 106
 state 107
 
     (29) CYCLE -> DO Body WHILE LPARENTH Expresion . RPARENTH SEMICOLON
-    (35) Expresion -> Expresion . NOTEQUAL Exp
+    (35) Expresion -> Expresion . GREATERTHAN Exp
     (36) Expresion -> Expresion . LESSTHAN Exp
-    (37) Expresion -> Expresion . GREATERTHAN Exp
+    (37) Expresion -> Expresion . NOTEQUAL Exp
 
     RPARENTH        shift and go to state 111
-    NOTEQUAL        shift and go to state 78
+    GREATERTHAN     shift and go to state 78
     LESSTHAN        shift and go to state 79
-    GREATERTHAN     shift and go to state 80
+    NOTEQUAL        shift and go to state 80
 
 
 state 108
