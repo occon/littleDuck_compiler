@@ -1,4 +1,4 @@
-class varTable:
+class VarTable:
     def __init__(self):
         self.vars = {}
 
@@ -14,3 +14,7 @@ class varTable:
 
     def __str__(self):
         return f"VariableTable({self.variables})"     
+    
+class FuncDirectory:
+    def __init__(self):
+        self.funcs = {}
