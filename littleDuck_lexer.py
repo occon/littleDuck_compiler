@@ -39,8 +39,6 @@ tokens = [
     'SEMICOLON',
 ] + list(reserved.values())
 
-# tokens += list(reserved.values())
-
 t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_MULTIPLY = r'\*'
@@ -56,7 +54,6 @@ t_NOTEQUAL = r'!='
 t_COMMA = r','
 t_COLON = r':'
 t_SEMICOLON = r';' 
-
 t_ignore = ' \t'
 
 
@@ -74,7 +71,6 @@ def t_CTE_INT(t):
     r'[-]?\d+'
     t.value = int(t.value)
     return t
-
 
 def t_CTE_STRING(t):
     r'"(\\.|[^"\\])*"'
